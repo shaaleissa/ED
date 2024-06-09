@@ -1,0 +1,15 @@
+Flask
+pandas
+scikit-learn
+joblib
+flask_mail
+passlib
+itsdangerous
+python-dateutil
+xgboost
+wtforms
+Werkzeug
+pymongo
+flask_pymongo
+email_validator
+pickle-mixin

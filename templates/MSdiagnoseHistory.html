@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Site Title -->
+  <title>Diagnose History</title>
+  <!-- Meta Description Tag -->
+  <meta name="Description" content="Klinik is a HTML5 & CSS3 responsive template">
+  <!-- Favicon Icon -->
+  <link rel="icon" type="image/x-icon" href="static/images/favicon1.png" />
+  <!-- Font Awesoeme Stylesheet CSS -->
+  <link rel="stylesheet" href="static/font-awesome/css/font-awesome.min.css" />
+  <!-- Google web Font -->
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,500">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="static/css/bootstrap.min.css">
+  <!-- Material Design Lite Stylesheet CSS -->
+  <link rel="stylesheet" href="static/css/material.min.css" />
+  <!-- Material Design Select Field Stylesheet CSS -->
+  <link rel="stylesheet" href="static/css/mdl-selectfield.min.css">
+  <!-- Owl Carousel Stylesheet CSS -->
+  <link rel="stylesheet" href="static/css/owl.carousel.min.css" />
+  <!-- Animate Stylesheet CSS -->
+  <link rel="stylesheet" href="static/css/animate.min.css" />
+  <!-- Magnific Popup Stylesheet CSS -->
+  <link rel="stylesheet" href="static/css/magnific-popup.css" />
+  <!-- Flex Slider Stylesheet CSS -->
+  <link rel="stylesheet" href="static/css/flexslider.css" />
+  <!-- Custom Main Stylesheet CSS -->
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+
+<body>
+  <!-- Start Header -->
+
+  <header id="header-transparent">
+    <div class="layer-stretch hdr-top">
+
+
+      <div class="hdr-top-block">
+        <div>
+          <a href="/logout" class="mdl-button mdl-js-button mdl-js-ripple-effect font-12"><i class="fa fa-sign-out color-black"></i> Logout</a>
+
+        </div>
+
+      </div>
+      <div class="hdr-center-logo text-center">
+        <a href="/" class="d-inline-block"><img src="{{url_for('static', filename='images/logo1.png')}}" alt=""></a>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Start Page Title Section -->
+  <div class="page-ttl">
+    <div class="layer-stretch">
+      <div class="page-ttl-container">
+        <br>
+        <br>
+        <h1>Easy Diagnosis</h1>
+        <p><a href="/">Home</a> &#8594; <a href="/diagnosishistory">Diagnose History</a></p>
+      </div>
+    </div>
+  </div><!-- End Page Title Section -->
+  <!-- Start Doctor List Section -->
+  <div id="doctor-page" class="layer-stretch" style="min-height:470px">
+    <div class="layer-wrapper layer-bottom-10">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="theme-material-card">
+            <div class="sub-ttl">Dashboard</div>
+            <ul class="category-list">
+              <li><a href="/profile"><i class="fa fa-id-card-o"></i>Profile</a></li>
+              <li><a href="/diagnosishistory"><i class="fa fa-address-book"></i>Diagnose History</a></li>
+
+            </ul>
+          </div>
+
+        </div>
+        <div class="col-lg-8">
+          <div class="theme-material-card">
+
+            <div class="sub-ttl">Diagnose History</div>
+
+
+            {%if usertype=='medical specialist'%}
+            <form method=post action="">
+
+              <div style="margin:10pt width:500pt">
+                {% from "includes/_formhelpers.html" import render_field%}
+                <div class="container">
+                  <div class="row">
+                    <div class="col-2">
+                    </div>
+                    <div class="col-7">
+                      <div class="form-group">
+                        {{render_field(form.patientID,class_="form-control")}}
+
+                      </div>
+                    </div>
+                    <div class="col-3" style="padding-top:19px">
+                      <input class="btn btn-primary" type=submit value=submit>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </form>
+            {% endif%}
+            <!-- res[2]=='Schizophrenia' -->
+            <div style="position:relative; left: 22em; margin-bottom:2em">
+              <a href="/diagnosis"><button type="submit" class="button-icon button-icon-blue m-1" align=center>
+                  <span>&nbsp&nbsp&nbsp&nbspDiagnose&nbsp&nbsp&nbsp&nbsp</span>
+                </button></a>
+            </div>
+
+
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Result ID</th>
+                  <th>Date</th>
+                  <th>Disease</th>
+                  <th>Result</th>
+                  <th>Result Accuracy</th>
+                </tr>
+              </thead>
+<tbody id="myTable">
+                {% for res in result %}
+                <tr>
+                  <td>{{res['test_id']}}</td>
+                  <td>{{res['test_date']}}</td>
+                  <!--'Date not added in page MSDiagnoseHistory.html'-->
+                  {% if res['disease']=='Chronic Kidney Disease'%}
+                  <td>Chronic Kidney Disease</td>
+                  {% elif res['disease']=='Diabetes Mellitus' %}
+                  <td>Diabetes Mellitus</td>
+                  {% elif res['disease']=='Coronary Heart Disease' %}
+                  <td>Coronary Heart Disease</td>
+                  {% elif res['disease']=='Rheumatoid Arthritis Disease' %}
+                  <td>Rheumatoid Arthritis Disease</td>
+                  {% elif res['disease']=='Asthma Disease' %}
+                  <td>Asthma Disease</td>
+                  {% elif res['disease']=='Thyroid Cancer' %}
+                  <td>Thyroid Cancer Disease</td>
+                  {% elif res['disease']=='Schizophrenia' %}
+                  <td>Schizophrenia</td>
+                  {% elif res['disease']=='Hypothyroidism' %}
+                  <td>Hypothyroidism </td>
+                  {% elif res['disease']=='Prostate Cancer' %}
+                  <td>Prostate Cancer </td>
+                  {% elif res['disease']=='Multiple Sclerosis' %}
+                  <td>Multiple Sclerosis </td>
+                  {% elif res['disease']=='Alzheimer’s Disease' %}
+                  <td>Alzheimer’s Disease </td>
+                  {% elif res['disease']=='Lung Cancer' %}
+                  <td>Lung Cancer </td>
+                  {% elif res['disease']=='Glaucoma' %}
+                  <td>Glaucoma </td>
+                  {% elif res['disease']=='Liver Cirrhosis' %}
+                  <td>Liver Cirrhosis </td>
+                  {% elif res['disease']=='Parkinson’s Disease' %}
+                  <td>Parkinson’s Disease </td>
+                  {% elif res['disease']=='Cervical Cancer' %}
+                  <td>Cervical Cancer </td>
+                  {% elif res['disease']=='Hepatitis C' %}
+                  <td>Hepatitis C </td>
+                  {% elif res['disease']=='Depression' %}
+                  <td>Depression </td>
+                  {% elif res['disease']=='Chronic Obstructive Pulmonary Disease' %}
+                  <td>Chronic Obstructive Pulmonary Disease </td>
+                  {% elif res['disease']=='Schizophrenia Disease' %}
+                  <td>Schizophrenia Disease </td>
+                  {% elif res['disease']=='Hypertension Disease' %}
+                  <td>Hypertension Disease </td>
+                  {% elif res['disease']=='Colorectal Cancer' %}
+                  <td>Colorectal Cancer</td>
+                  {% elif res['disease']=='Skin Cancer' %}
+                  <td>Skin Cancer</td>
+                  {%else%}
+                  <td>Invalid Request</td>
+                  {% endif %}
+                  {% if res['prediction']== "Negative"%}
+                  <td><span class="badge badge-primary">{{'Negative'}}</span></td>
+                  {% else %}
+                  <td><span class="badge badge-danger">{{'Positive'}}</span></td>
+                  {% endif %}
+                  
+                  {% set acc = (res['accuracy']|float)*100 %}
+                  <td>{{ acc|round(2) }}%</td>
+                </tr>
+
+                {% endfor %}
+
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Jquery Library 2.1 JavaScript-->
+  <script>
+    $(document).ready(function() {
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+  </script>
+
+  <footer id="footer">
+    <div class="layer-stretch">
+      <!-- Start main Footer Section -->
+      <div class="row layer-wrapper">
+        <div class="col-md-4 footer-block">
+          <div class="footer-container footer-a">
+            <div class="tbl">
+              <div class="tbl-row">
+                <div class="tbl-cell"><i class="fa fa-map-marker"></i></div>
+                <div class="tbl-cell">
+                  <p class="paragraph-medium paragraph-white">
+                    Saudi Arabia, Dammam
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 ">
+          <div class="footer-container footer-a">
+            <div class="tbl">
+              <div class="tbl-row">
+
+                <div class="tbl-cell"><i class="fa fa-phone"></i></div>
+                <div class="tbl-cell">
+                  <p class="paragraph-medium paragraph-white">013-600-1343</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="footer-container footer-a">
+            <div class="tbl-row">
+              <div class="tbl-cell"><i class="fa fa-envelope"></i></div>
+              <div class="tbl-cell">
+                <p class="paragraph-medium paragraph-white"><a href="mailto: Easy Diagnosis <identify2021.noreply@gmail.com>?Subject=Report%20Problem:%20--fill%20report%20title--" target="_top"> Contact us </a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End main Footer Section -->
+    <!-- Start Copyright Section -->
+    <div id="copyright">
+      <div class="layer-stretch">
+        <div class="paragraph-medium paragraph-white">Easy Diagnosis 2021 ©.</div>
+      </div>
+    </div><!-- End of Copyright Section -->
+  </footer>
+  <script src="static/js/jquery-2.1.4.min.js"></script>
+  <!-- Popper JavaScript-->
+  <script src="static/js/popper.min.js"></script>
+  <!-- Bootstrap Core JavaScript-->
+  <script src="static/js/bootstrap.min.js"></script>
+  <!-- Material Design Lite JavaScript-->
+  <script src="static/js/material.min.js"></script>
+  <!-- Material Select Field Script -->
+  <script src="static/js/mdl-selectfield.min.js"></script>
+  <!-- Flexslider Plugin JavaScript-->
+  <script src="static/js/jquery.flexslider.min.js"></script>
+  <!-- Owl Carousel Plugin JavaScript-->
+  <script src="static/js/owl.carousel.min.js"></script>
+  <!-- Scrolltofixed Plugin JavaScript-->
+  <script src="static/js/jquery-scrolltofixed.min.js"></script>
+  <!-- Magnific Popup Plugin JavaScript-->
+  <script src="static/js/jquery.magnific-popup.min.js"></script>
+  <!-- WayPoint Plugin JavaScript-->
+  <script src="static/js/jquery.waypoints.min.js"></script>
+  <!-- CounterUp Plugin JavaScript-->
+  <script src="static/js/jquery.counterup.js"></script>
+  <!-- SmoothScroll Plugin JavaScript-->
+  <script src="static/js/smoothscroll.min.js"></script>
+  <!--Custom JavaScript for Klinik Template-->
+  <script src="static/js/custom.js"></script>
+</body>
+
+</html>

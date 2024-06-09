@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Site Title -->
+    <title>Rebuild Model</title>
+    <!-- Meta Description Tag -->
+    <meta name="Description" content="Klinik is a HTML5 & CSS3 responsive template">
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/x-icon" href='{{url_for("static", filename="images/favicon1.png")}}'/>
+    <!-- Font Awesoeme Stylesheet CSS -->
+    <link rel="stylesheet" href='{{url_for("static", filename="font-awesome/css/font-awesome.min.css")}}'/>
+    <!-- Google web Font -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,500">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href='{{url_for("static", filename="css/bootstrap.min.css")}}'/>
+    <!-- Material Design Lite Stylesheet CSS -->
+    <link rel="stylesheet" href='{{url_for("static", filename="css/material.min.css")}}'/>
+    <!-- Custom Main Stylesheet CSS -->
+    <link rel="stylesheet" href='{{url_for("static", filename="css/style.css")}}'>
+
+     <style>
+            table tr:not(:first-child){
+                cursor: pointer;transition: all .25s ease-in-out;
+            }
+            table tr:not(:first-child):hover {background-color: #ddd;}
+            table tr:not(:first-child).selected {background-color: #ddd;}
+
+        </style>
+</head>
+<body>
+    <!-- Start Header -->
+
+      <!-- Start Header -->
+
+    <header id="header-transparent">
+            <div class="layer-stretch hdr-top">
+
+
+                <div class="hdr-top-block">
+                    <div>
+                        <a href="/logout" class="mdl-button mdl-js-button mdl-js-ripple-effect font-12"><i class="fa fa-sign-out color-black"></i> Logout</a>
+
+                    </div>
+
+                </div>
+                 <div class="hdr-center-logo text-center">
+                        <a href="/" class="d-inline-block"><img src="{{url_for('static', filename='images/logo1.png')}}" alt=""></a>
+                    </div>
+
+        </div>
+
+
+    </header><!-- End Header -->
+
+    <!-- Start Page Title Section -->
+    <div class="page-ttl">
+        <div class="layer-stretch">
+            <div class="page-ttl-container">
+                <br>
+                <br>
+                <h1>Easy Diagnosis </h1>
+                <p><a href="/">Home</a> &#8594; <a href="/rebuildModel">Rebuild Model</a></p>
+            </div>
+        </div>
+    </div><!-- End Page Title Section -->
+    <!-- Start Doctor List Section -->
+    <div id="doctor-page" class="layer-stretch">
+        <div class="layer-wrapper layer-bottom-10">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="theme-material-card">
+                        <div class="sub-ttl">Dashboard</div>
+                        <ul class="category-list">
+                            <li><a href="/profile"><i class="fa fa-id-card-o"></i>Profile</a></li>
+                            <li><a href="/manageUser"><i class="fa fa-address-book"></i>Manage User</a></li>
+                            <li><a href="/rebuildModel"><i class="fa fa-cogs"></i>Rebuild Model</a></li>
+
+                        </ul>
+                    </div>
+                    <div style ="overflow-y: auto; border-style: ridge; border-width: 1px; height: 250px">
+                    <table id = "modelTable" class= "table table-hover, list-danger"> <!--"list-group list-danger"-->
+                        <tr><td class="list-group-item active" style="text-align: center">Models</td></tr>
+                         {% for model in tempModels %}
+                             <tr id="row">
+                                 <td id="row">{{ model.ModelName }} <span>&emsp;&emsp;&emsp;</span> {{ model.ModelType }}</td>
+                            <!--class="list-group-item"-->
+                            </tr>
+                         {% endfor %}
+
+                    </table>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+
+                <div class="container">
+                    {% with messages = get_flashed_messages(category_filter=["info"]) %}
+                    {% if messages %}
+                <div id = "success" class="alert alert-success alert-dismissible">
+                    <a href='#' class='close' data-dismiss='alert' aria-label='close' onclick='displayMsg()'>&times;</a>
+                    {% for message in messages %}
+                    {{ message }}
+                    {% endfor %}
+                </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+
+                    <div class="theme-material-card">
+                         <div class="sub-ttl">Rebuild Model</div>
+                        <div class= "row">
+                        <div class="col-sm-5">
+                        <span id = "empty" style="color:red; font-size: 11px;"></span>
+                        <form method = "post" enctype ="multipart/form-data" action = "/generateModel" onsubmit="return validateInput();">
+                       <input type ="file" name = "dataFile" id = "f1" onchange = "displayFileName()" style="visibility: hidden">
+                            <label for="f1" class="button-icon button-icon-blue"><span id = "fileInput" style = "width: 200px;">Upload data file</span>
+                            <i class="fa fa-file"></i></label>
+
+                            <p><span id = "fileError" style="color:red; font-size: 11px;"></span></p>
+                            <div class="theme-dropdown">
+                                <select name = "diseaseList" id="d1" style = "background-color: white"><!--<i class="fa fa-chevron-down"></i>-->
+
+                                <!--<ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect metarial-menu" data-mdl-for="sample-menu-1" id="d1">-->
+                                    <option class="mdl-textfield__label" selected value label="Disease"></option>
+                                    <option class="mdl-menu__item"><a>Diabetes</a></option>
+                                    <option class="mdl-menu__item"><a>Chronic Kidney Disease</a></option>
+                                    <option class="mdl-menu__item"><a>Coronary Heart Disease</a></option>
+                                    <option class="mdl-menu__item"><a>Rheumatoid Arthritis Disease</a></option>
+									<option class="mdl-menu__item"><a>Asthma Disease</a></option>
+                                    <option class="mdl-menu__item"><a>Thyroid Cancer</a></option>
+                                    <option class="mdl-menu__item"><a>Schizophrenia</a></option>
+                                    <option class="mdl-menu__item"><a>Hypothyroidism</a></option>
+                                    <option class="mdl-menu__item"><a>Prostate Cancer</a></option>
+									<option class="mdl-menu__item"><a>Multiple Sclerosis</a></option>
+                                    <option class="mdl-menu__item"><a>Alzheimer’s Disease</a></option>
+                                    <option class="mdl-menu__item"><a>Lung Cancer</a></option>
+                                    <option class="mdl-menu__item"><a>Glaucoma</a></option>
+                                    <option class="mdl-menu__item"><a>Liver Cirrhosis</a></option>
+                                    <option class="mdl-menu__item"><a>Parkinsons Disease</a></option>
+                                    <option class="mdl-menu__item"><a>Cervical Cancer</a></option>
+                                    <option class="mdl-menu__item"><a>Hepatitis C</a></option>
+                                    <option class="mdl-menu__item"><a>Depression</a></option>
+                                    <option class="mdl-menu__item"><a>Chronic Obstructive Pulmonary Disease</a></option>
+                                    <option class="mdl-menu__item"><a>Hypertension</a></option>
+                                    <option class="mdl-menu__item"><a>Colorectal Cancer</a></option>
+                                    <option class="mdl-menu__item"><a>Skin Cancer</a></option>
+                                    <option class="mdl-menu__item"><a>Sickle Cell Anemia</a></option>
+                                    <option class="mdl-menu__item"><a>Epileptic Seizure</a></option>
+                                    <option class="mdl-menu__item"><a>Osteoporosis</a></option>
+                                    <option class="mdl-menu__item"><a>Stroke</a></option>
+                                    <option class="mdl-menu__item"><a>PCOS</a></option>
+                                    <option class="mdl-menu__item"><a>Pancreatic Cancer</a></option>
+                                </select>
+                            </div>
+
+
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+                    <i class="fa fa-line-chart"></i>
+                    <input id="tp" class="mdl-textfield__input" type="text" name="trainingP">
+                    <label class="mdl-textfield__label" for="tp">Training Percentage <em> %</em></label>
+                    <span id = "trainingError" style="color:red; font-size: 11px;"></span>
+                </div>
+                         <br>
+                            <br>
+                             <button type="submit" class="button-icon button-icon-blue ">
+                                    <span>Generate Model</span>
+                            <i class="fa fa-cog"></i></button>
+                            </form>
+                        </div>
+
+                        <div class="col-lg-7">
+                        <form method="post" action = "/updateModel" onsubmit = "return update()">
+                         <div class="panel panel-default mb-5">
+                                        <div class="panel-heading">Model Summary</div>
+                                        <div class="panel-body">
+                                            <div style="height: 300px; overflow-y: scroll;">
+                                            <p id="emptyModels"></p>
+                                        <span id="line1"></span>
+                                            <span><input type="text" name="mName" id="mName" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer" style = "width: 1000px" readonly></span>
+                                        <span id="line"></span>
+                                            <span><input type="text" name="mName" id="mName2" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease2" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst2" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct2" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect2" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer2" style = "width: 1000px" readonly></span>
+                                        <span id="line3"></span>
+                                            <span><input type="text" name="mName" id="mName3" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease3" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst3" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct3" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect3" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer3" style = "width: 1000px" readonly></span>
+                                        <span id="line4"></span>
+                                            <span><input type="text" name="mName" id="mName4" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease4" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst4" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct4" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect4" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer4" style = "width: 1000px" readonly></span>
+                                        <span id="line5"></span>
+                                            <span><input type="text" name="mName" id="mName5" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease5" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst5" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct5" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect5" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer5" style = "width: 1000px" readonly></span>
+                                        <span id="line6"></span>
+                                            <span><input type="text" name="mName" id="mName6" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease6" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst6" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct6" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect6" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer6" style = "width: 1000px" readonly></span>
+                                        <span id="line7"></span>
+                                            <span><input type="text" name="mName" id="mName7" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease7" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst7" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct7" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect7" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer7" style = "width: 1000px" readonly></span>
+                                        <span id="line8"></span>
+                                            <span><input type="text" name="mName" id="mName8" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease8" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst8" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct8" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect8" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer8" style = "width: 1000px" readonly></span>
+                                        <span id="line9"></span>
+                                            <span><input type="text" name="mName" id="mName9" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease9" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst9" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct9" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect9" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer9" style = "width: 1000px" readonly></span>
+					                    <span id="line10"></span>
+                                            <span><input type="text" name="mName" id="mName10" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease10" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst10" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct10" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect10" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer10" style = "width: 1000px" readonly></span>
+                                        <span id="line11"></span>
+                                            <span><input type="text" name="mName" id="mName11" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease11" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst11" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct11" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect11" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer11" style = "width: 1000px" readonly></span>
+                                        <span id="line12"></span>
+                                            <span><input type="text" name="mName" id="mName12" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease12" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst12" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct12" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect12" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer12" style = "width: 1000px" readonly></span>
+                                        <span id="line13"></span>
+                                            <span><input type="text" name="mName" id="mName13" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease13" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst13" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct13" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect13" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer13" style = "width: 1000px" readonly></span>
+                                        <span id="line14"></span>
+                                            <span><input type="text" name="mName" id="mName14" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease14" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst14" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct14" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect14" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer14" style = "width: 1000px" readonly></span>
+                                        <span id="line15"></span>
+                                            <span><input type="text" name="mName" id="mName15" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease15" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst15" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct15" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect15" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer15" style = "width: 1000px" readonly></span>
+					                    <span id="line16"></span>
+                                            <span><input type="text" name="mName" id="mName16" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease16" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst16" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct16" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect16" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer16" style = "width: 1000px" readonly></span>
+                                        <span id="line17"></span>
+                                            <span><input type="text" name="mName" id="mName17" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease17" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst17" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct17" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect17" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer17" style = "width: 1000px" readonly></span>
+                                        <span id="line18"></span>
+                                            <span><input type="text" name="mName" id="mName18" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease18" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst18" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct18" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect18" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer18" style = "width: 1000px" readonly></span>
+                                        <span id="line19"></span>
+                                            <span><input type="text" name="mName" id="mName19" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease19" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst19" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct19" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect19" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer19" style = "width: 1000px" readonly></span>
+                                        <span id="line20"></span>
+                                            <span><input type="text" name="mName" id="mName20" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease20" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst20" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct20" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect20" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer20" style = "width: 1000px" readonly></span>
+                                            <span id="line21"></span>
+                                            <span><input type="text" name="mName" id="mName21" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease21" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst21" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct21" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect21" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer21" style = "width: 1000px" readonly></span>
+                                            <span id="line22"></span>
+                                            <span><input type="text" name="mName" id="mName22" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease22" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst22" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct22" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect22" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer22" style = "width: 1000px" readonly></span>
+
+                                            <span id="line23"></span>
+                                            <span><input type="text" name="mName" id="mName23" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease23" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst23" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct23" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect23" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer23" style = "width: 1000px" readonly></span>
+                                        <span id="line24"></span>
+                                            <span><input type="text" name="mName" id="mName24" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease24" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst24" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct24" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect24" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer24" style = "width: 1000px" readonly></span>
+                                        <span id="line25"></span>
+                                            <span><input type="text" name="mName" id="mName25" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease25" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst25" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct25" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect25" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer25" style = "width: 1000px" readonly></span>
+                                        <span id="line26"></span>
+                                            <span><input type="text" name="mName" id="mName26" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease26" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst26" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct26" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect26" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer26" style = "width: 1000px" readonly></span>
+                                        <span id="line27"></span>
+                                            <span><input type="text" name="mName" id="mName27" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease27" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst27" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct27" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect27" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer27" style = "width: 1000px" readonly></span>
+                                        <span id="line28"></span>
+                                            <span><input type="text" name="mName" id="mName28" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="mDisease" id="mDisease28" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="totalInst" id="totalInst28" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="correct" id="correct28" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="incorrect" id="incorrect28" style = "width: 1000px" readonly></span>
+                                            <span><input type="text" name="trainingPer" id ="trainingPer28" style = "width: 1000px" readonly></span>
+
+
+					
+                                        </div>
+                                    </div>
+                         </div>
+
+                            <p id = "activeError" style="color:red; font-size: 11px; width: 250px"></p>
+                            <p id = "updateError" style="color:red; font-size: 11px; width: 250px"></p>
+                            <button type = "submit" class="btn btn-primary btn-lg m-1" style="width: 250px">Update Diagnostic Model</button>
+                            </form>
+                             <p id = "activeError" style="color:red; font-size: 11px;"></p>
+                            <button onclick = "showActiveModel()" class="btn btn-primary btn-lg m-1" style="width: 250px" data-dismiss="alert">Show Current Model</button>
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                </div>
+            </div>
+      <footer id="footer">
+        <div class="layer-stretch">
+            <!-- Start main Footer Section -->
+           <div class="row layer-wrapper">
+                <div class="col-md-4 footer-block">
+                    <div class="footer-container footer-a">
+                        <div class="tbl">
+                            <div class="tbl-row">
+                                <div class="tbl-cell"><i class="fa fa-map-marker"></i></div>
+                                <div class="tbl-cell">
+                                    <p class="paragraph-medium paragraph-white">
+                                        Saudi Arabia, Dammam
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <div class="footer-container footer-a">
+                        <div class="tbl">
+                            <div class="tbl-row">
+
+                                <div class="tbl-cell"><i class="fa fa-phone"></i></div>
+                                <div class="tbl-cell">
+                                    <p class="paragraph-medium paragraph-white">013-600-1343</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-container footer-a">
+                      <div class="tbl-row">
+                                <div class="tbl-cell"><i class="fa fa-envelope"></i></div>
+                                <div class="tbl-cell">
+                                    <p class="paragraph-medium paragraph-white"><a href="mailto: Easy Diagnosis <identify2021.noreply@gmail.com>?Subject=Report%20Problem:%20--fill%20report%20title--" target="_top"> Contact us </a></p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End main Footer Section -->
+        <!-- Start Copyright Section -->
+        <div id="copyright">
+            <div class="layer-stretch">
+                <div class="paragraph-medium paragraph-white">Easy Diagnosis 2021 ©.</div>
+            </div>
+        </div><!-- End of Copyright Section -->
+    </footer>
+
+
+
+   <script type="text/javascript">
+
+
+       /*{% if update == 1 %}
+       document.getElementById.('success').innerHTML = "<a href='#' class='close' data-dismiss='alert' aria-label='close' onclick='displayMsg()'>&times;</a> <strong>Success!</strong> Diagnostic Model has been Updated.";
+       {% endif %}*/
+
+
+       var table1 = document.getElementById('modelTable');
+       var tableLength;
+       var selectedRow;
+       var position;
+       var selectedName;
+       var tPercentage;
+       var acc;
+       var totalInst;
+       var testInst;
+       var selectedDisease;
+
+
+
+    {% if tempModels|length == 0 %}
+    document.getElementById('emptyModels').innerHTML = "No Models are Generated";
+    
+       {% else %}
+
+       document.getElementById('emptyModels').innerHTML = "";
+       tableLength = table1.rows.length-1;
+       selectedRow = table1.rows[tableLength].cells[0].innerHTML;
+       position = selectedRow.indexOf(".sav");
+       selectedName = selectedRow.substring(0,position+4);
+       tPercentage = '{{ tempModels[tempModels|length-1].2 }}';
+       acc = '{{ tempModels[tempModels|length-1].3 }}';
+       totalInst = '{{ tempModels[tempModels|length-1].4 }}';
+       testInst = '{{ tempModels[tempModels|length-1].5 }}';
+       selectedDisease = '{{ tempModels[tempModels|length-1].1 }}';
+
+       table1.rows[tableLength].classList.add("selected");
+
+
+       modelSummary(selectedName, selectedDisease, totalInst, testInst, acc, tPercentage, 'temp');
+       {% endif %}
+
+
+        for(var i=1; i < table1.rows.length; i++)
+        {
+            table1.rows[i].onclick = function()
+            {
+                         //rIndex = this.rowIndex;
+                //var selectedRow = this.cells[1].innerHTML;
+                $(this).addClass("selected").siblings().removeClass("selected");
+                selectedRow = this.cells[0].innerHTML;
+                position = selectedRow.indexOf(".sav");
+                selectedName = selectedRow.substring(0,position+4);
+
+
+                {% for model in tempModels %}
+                if(selectedName == '{{ model.ModelName }}')
+                {
+                  document.getElementById('emptyModels').innerHTML = "";
+                  selectedDisease = '{{ model.ModelType }}';
+                  tPercentage = '{{ model.TrainingPercent }}';
+                  acc = '{{ model.Accuracy }}';
+                  totalInst = '{{ model.TotalInstances }}';
+                  testInst = '{{ model.TestInstances}}';
+
+                }
+                {% endfor %}
+
+
+                modelSummary(selectedName, selectedDisease, totalInst, testInst, acc, tPercentage, 'temp');
+
+            };
+        }
+
+       function displayMsg()
+       {
+           var x = document.getElementById("success");
+          if (x.style.display === "none") {
+                x.style.display = "block";
+           }
+           else {
+                x.style.display = "none";
+         }
+       }
+       function modelSummary(modelName, diseaseType, totalInstances, test, accuracy, TrainingPercent, model)
+         {
+             var editAcc = (parseFloat(accuracy)*100).toFixed(3);
+             var correctInst = Math.ceil(parseFloat(accuracy)*parseInt(test));
+             var incorrectInst = parseInt(test)-correctInst;
+             var incorrectP = (100-editAcc).toFixed(3);
+
+             if(model == 'current') {
+             if(diseaseType == "Diabetes")
+             {
+                document.getElementById("line1").innerHTML = "_________________ <b>Diabetes</b> _________________";
+                document.getElementById('mName').value = "Model Name: " + modelName;
+                document.getElementById('mDisease').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+
+             else if(diseaseType == "Chronic Kidney Disease")
+             {
+                document.getElementById("line").innerHTML = "_________________ <b>CKD</b> _________________";
+                document.getElementById('mName2').value = "Model Name: " + modelName;
+                document.getElementById('mDisease2').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst2').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct2').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect2").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer2").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+             else if(diseaseType == "Coronary Heart Disease")
+             {
+                document.getElementById("line3").innerHTML = "_________________ <b>CHD</b> _________________";
+                document.getElementById('mName3').value = "Model Name: " + modelName;
+                document.getElementById('mDisease3').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst3').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct3').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect3").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer3").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+             else if(diseaseType == "Rheumatoid Arthritis")
+             {
+                document.getElementById("line4").innerHTML = "_________________ <b>RA</b> _________________";
+                document.getElementById('mName4').value = "Model Name: " + modelName;
+                document.getElementById('mDisease4').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst4').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct4').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect4").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer4").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+             else if(diseaseType == "Multiple Sclerosis")
+             {
+                document.getElementById("line5").innerHTML = "_________________ <b>MS</b> _________________";
+                document.getElementById('mName5').value = "Model Name: " + modelName;
+                document.getElementById('mDisease5').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst5').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct5').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect5").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer5").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+                 else if(diseaseType == "Thyroid Cancer")
+             {
+                document.getElementById("line6").innerHTML = "_________________ <b>Thyroid Cancer</b> _________________";
+                document.getElementById('mName6').value = "Model Name: " + modelName;
+                document.getElementById('mDisease6').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst6').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct6').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect6").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer6").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+                  else if(diseaseType == "Asthma")
+             {
+                document.getElementById("line7").innerHTML = "_________________ <b>Asthma</b> _________________";
+                document.getElementById('mName7').value = "Model Name: " + modelName;
+                document.getElementById('mDisease7').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst7').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct7').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect7").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer7").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+
+
+ 		else if(diseaseType == "Alzheimer")
+             {
+                document.getElementById("line8").innerHTML = "_________________ <b>Alzheimer</b> _________________";
+                document.getElementById('mName8').value = "Model Name: " + modelName;
+                document.getElementById('mDisease8').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst8').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct8').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect8").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer8").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+
+
+ 		else if(diseaseType == "Hypothyroidism")
+             {
+                document.getElementById("line9").innerHTML = "_________________ <b>Hypothyroidism</b> _________________";
+                document.getElementById('mName9').value = "Model Name: " + modelName;
+                document.getElementById('mDisease9').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst9').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct9').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect9").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer9").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+			else if(diseaseType == "Prostate Cancer")
+             {
+                document.getElementById("line10").innerHTML = "_________________ <b>Prostate Cancer</b> _________________";
+                document.getElementById('mName10').value = "Model Name: " + modelName;
+                document.getElementById('mDisease10').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst10').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct10').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect10").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer10").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+				else if(diseaseType == "Glaucoma")
+             {
+                document.getElementById("line11").innerHTML = "_________________ <b>Glaucoma</b> _________________";
+                document.getElementById('mName11').value = "Model Name: " + modelName;
+                document.getElementById('mDisease11').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst11').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct11').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect11").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer11").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+		else if(diseaseType == "Lung Cancer")
+             {
+                document.getElementById("line12").innerHTML = "_________________ <b>Lung Cancer</b> _________________";
+                document.getElementById('mName12').value = "Model Name: " + modelName;
+                document.getElementById('mDisease12').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst12').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct12').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect12").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer12").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+		else if(diseaseType == "Hepatitis C")
+             {
+                document.getElementById("line13").innerHTML = "_________________ <b>Hepatitis C</b> _________________";
+                document.getElementById('mName13').value = "Model Name: " + modelName;
+                document.getElementById('mDisease13').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst13').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct13').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect13").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer13").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+        else if(diseaseType == "Depression")
+             {
+                document.getElementById("line14").innerHTML = "_________________ <b>Depression</b> _________________";
+                document.getElementById('mName14').value = "Model Name: " + modelName;
+                document.getElementById('mDisease14').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst14').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct14').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect14").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer14").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+        else if(diseaseType == "Chronic Obstructive Pulmonary Disease")
+             {
+                document.getElementById("line15").innerHTML = "_________________ <b>COPD</b> _________________";
+                document.getElementById('mName15').value = "Model Name: " + modelName;
+                document.getElementById('mDisease15').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst15').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct15').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect15").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer15").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+        else if(diseaseType == "Parkinsons Disease")
+             {
+                document.getElementById("line16").innerHTML = "________________ <b>Parkinsons Disease</b> ________________";
+                document.getElementById('mName16').value = "Model Name: " + modelName;
+                document.getElementById('mDisease16').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst16').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct16').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect16").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer16").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+        else if(diseaseType == "Schizophrenia")
+             {
+                document.getElementById("line17").innerHTML = "_________________ <b>Schizophrenia</b> _________________";
+                document.getElementById('mName17').value = "Model Name: " + modelName;
+                document.getElementById('mDisease17').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst17').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct17').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect17").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer17").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+        else if(diseaseType == "Cervical Cancer")
+             {
+                document.getElementById("line18").innerHTML = "_________________ <b>Cervical Cancer</b> _________________";
+                document.getElementById('mName18').value = "Model Name: " + modelName;
+                document.getElementById('mDisease18').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst18').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct18').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect18").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer18").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+        else if(diseaseType == "Liver Cirrhosis")
+             {
+                document.getElementById("line19").innerHTML = "_________________ <b>Liver Cirrhosis</b> _________________";
+                document.getElementById('mName19').value = "Model Name: " + modelName;
+                document.getElementById('mDisease19').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst19').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct19').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect19").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer19").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+             else if(diseaseType == "Hypertension Disease")
+             {
+                document.getElementById("line20").innerHTML = "_________________ <b>Hypertension</b> _________________";
+                document.getElementById('mName20').value = "Model Name: " + modelName;
+                document.getElementById('mDisease20').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst20').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct20').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect20").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer20").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+             else if(diseaseType == "Skin Cancer")
+             {
+                document.getElementById("line21").innerHTML = "_________________ <b>Skin Cancer</b> _________________";
+                document.getElementById('mName21').value = "Model Name: " + modelName;
+                document.getElementById('mDisease21').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst21').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct21').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect21").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer21").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+             else if(diseaseType == "Colorectal Cancer")
+             {
+                document.getElementById("line22").innerHTML = "_____________ <b>Colorectal Cancer</b> ________";
+                document.getElementById('mName22').value = "Model Name: " + modelName;
+                document.getElementById('mDisease22').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst22').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct22').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect22").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer22").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+             else if(diseaseType == "SCA")
+             {
+                document.getElementById("line23").innerHTML = "______ <b>SCA</b> ______";
+                document.getElementById('mName23').value = "Model Name: " + modelName;
+                document.getElementById('mDisease23').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst23').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct23').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect23").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer23").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+
+        else if(diseaseType == "Osteoporosis")
+             {
+                document.getElementById("line24").innerHTML = "______ <b>Osteoporosis</b> ______";
+                document.getElementById('mName24').value = "Model Name: " + modelName;
+                document.getElementById('mDisease24').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst24').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct24').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect24").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer24").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+
+        else if(diseaseType == "Epileptic Seizure")
+             {
+                document.getElementById("line25").innerHTML = "______ <b>Epileptic Seizure</b> ______";
+                document.getElementById('mName25').value = "Model Name: " + modelName;
+                document.getElementById('mDisease25').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst25').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct25').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect25").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer25").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+        else if (diseaseType == "Pancreatic Cancer")
+             {
+                document.getElementById("line26").innerHTML = "______ <b>Pancreatic Cancer</b> ______";
+                document.getElementById('mName26').value = "Model Name: " + modelName;
+                document.getElementById('mDisease26').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst26').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct26').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect26").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer26").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+        else if (diseaseType =="Stroke")
+             {
+                document.getElementById("line27").innerHTML = "______ <b>Stroke</b> ______";
+                document.getElementById('mName27').value = "Model Name: " + modelName;
+                document.getElementById('mDisease27').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst27').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct27').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect27").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer27").value = "Training Percentage: "+ TrainingPercent +"%";
+             }
+        else if (diseaseType =="PCOS")
+                {
+                    document.getElementById("line28").innerHTML = "______ <b>PCOS</b> ______";
+                    document.getElementById('mName28').value = "Model Name: " + modelName;
+                    document.getElementById('mDisease28').value = "Disease Type: " + diseaseType;
+                    document.getElementById('totalInst28').value = "Total Number of Instances: " + totalInstances;
+                    document.getElementById('correct28').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                    document.getElementById("incorrect28").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                    document.getElementById("trainingPer28").value = "Training Percentage: "+ TrainingPercent +"%";
+                }
+                }
+             else if(model == 'temp')
+             {
+                document.getElementById("line").innerHTML = "";
+                document.getElementById("line1").innerHTML = "";
+                document.getElementById('mName2').value = "";
+                document.getElementById('mDisease2').value = "";
+                document.getElementById('totalInst2').value = "";
+                document.getElementById('correct2').value = "";
+                document.getElementById("incorrect2").value = "";
+                document.getElementById("trainingPer2").value = "";
+
+                document.getElementById('mName').value = "Model Name: " + modelName;
+                document.getElementById('mDisease').value = "Disease Type: " + diseaseType;
+                document.getElementById('totalInst').value = "Total Number of Instances: " + totalInstances;
+                document.getElementById('correct').value = "Correctly Classified Instances: "+ correctInst +"     "+editAcc+"%";
+                document.getElementById("incorrect").value = "Incorrectly Classified Instances: "+ incorrectInst+"     "+incorrectP+"%";
+                document.getElementById("trainingPer").value = "Training Percentage: "+ TrainingPercent +"%";
+
+             }
+         }
+
+
+       function update()
+        {
+            {% if tempModels|length == 0 %}
+               document.getElementById('updateError').innerHTML = "<div class = 'alert alert-danger' role='alert'>A model should be generated</div>";
+               return false;
+            {% else %}
+            document.getElementById('updateError').innerHTML = "";
+            return true;
+            {% endif %}
+
+        }
+
+       function displayFileName()
+       {
+           var fileName = document.getElementById('f1').value;
+           if(fileName == "")
+               document.getElementById('fileInput').innerHTML = "Upload data file";
+           else {
+               fileName = fileName.replace("C:\\fakepath\\", "");
+               if(fileName.length > 19)
+                   fileName = fileName.substr(0,15) + "...";
+               document.getElementById('fileInput').innerHTML = fileName;
+
+           }
+
+       }
+
+       var activeModels = {{ activeModels | tojson }};
+       function showActiveModel()
+        {
+
+            {% if activeModels|length == 0 %}
+                document.getElementById('activeError').innerHTML = "<div class = 'alert alert-danger' role='alert'>No Models are Currently Active</div>";
+
+            {% else %}
+            document.getElementById('emptyModels').innerHTML = "";
+            document.getElementById('emptyModels').innerHTML = "<b>Current Active Models: </b>";
+            console.log(activeModels);
+               {% for active in activeModels %}
+                    modelSummary('{{ active.ModelName }}', '{{ active.DiseaseType }}', '{{ active.TotalInstances }}', '{{ active.TestInstances }}', '{{ active.Accuracy }}', '{{ active.TrainingPercent }}', 'current');
+               {% endfor %}
+            {% endif %}
+
+        }
+       function validateInput()
+       {
+
+           var fileValue = document.getElementById('f1').value;
+           var list = document.getElementById('d1');
+           //var diseaseValue = list[list.selectedIndex].value;
+           var diseaseValue = list.options[list.selectedIndex].text;
+           var training = document.getElementById('tp').value;
+
+           var allowedExtensions = /(\.csv)$/i;
+
+
+          document.getElementById('empty').innerHTML = "";
+          document.getElementById('fileError').innerHTML ="";
+          document.getElementById('trainingError').innerHTML = "";
+
+           if(fileValue == "" || diseaseValue == "" || training == "")
+           {
+
+               document.getElementById('empty').innerHTML = "<div class = 'alert alert-danger' role='alert'>All required fields must be filled</div>";
+               return false;
+           }
+
+           else if((!(allowedExtensions.exec(fileValue))) || (!(/^([0-9]{1,2})$/.test(training))) || parseInt(training) == 0)
+            {
+                document.getElementById('empty').innerHTML == ""
+                if(!(allowedExtensions.exec(fileValue)))
+                    {
+                        document.getElementById('fileError').innerHTML = "<div class = 'alert alert-danger' role='alert'>Dataset file should have extension '.csv'</div>";
+                    }
+                if(!(/^([0-9]{1,2})$/.test(training)) || parseInt(training) == 0)
+                    {
+                        document.getElementById('trainingError').innerHTML = "<div class = 'alert alert-danger' role='alert'>Training percentage should be an integer in the range (1-100)</div>";
+                    }
+             return false;
+            }
+
+           if(document.getElementById('empty').innerHTML == "" && document.getElementById('fileError').innerHTML == "" && document.getElementById('trainingError').innerHTML == "")
+           {
+               alert(document.getElementById("text1").innerHTML)
+               return true;
+           }
+
+
+       }
+
+
+
+   </script>
+
+
+
+    <!-- Jquery Library 2.1 JavaScript-->
+    <script src='{{url_for("static", filename="js/jquery-2.1.4.min.js")}}'></script>
+    <!-- Bootstrap Core JavaScript-->
+    <script src='{{url_for("static", filename="js/bootstrap.min.js")}}'></script>
+    <!-- Material Design Lite JavaScript-->
+    <script src='{{url_for("static", filename="js/material.min.js")}}'></script>
+    <!-- Material Select Field Script -->
+    <script src='{{url_for("static", filename="js/mdl-selectfield.min.js")}}'></script>
+</body>
+</html>

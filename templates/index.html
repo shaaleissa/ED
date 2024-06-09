@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Site Title -->
+    <title>Easy Diagnosis</title>
+    <!-- Meta Description Tag -->
+    <meta name="Description" content="Easy Diagnosis">
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='images/favicon1.png')}}" />
+    <!-- Font Awesoeme Stylesheet CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='font-awesome/css/font-awesome.min.css')}}" />
+
+    <!-- Google web Font -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}" />
+
+    <!-- Flex Slider Stylesheet CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/flexslider.css')}}" />
+    <!-- Custom Main Stylesheet CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
+</head>
+</head>
+<body>
+    <header id="header-transparent">
+            <div class="layer-stretch hdr-top">
+
+
+                <div class="hdr-top-block">
+                    <div style="" >
+                        {% if session['logged_in'] == True %}
+                        <a href="/profile" class="mdl-button mdl-js-button mdl-js-ripple-effect font-20 color-white"><i class="fa fa-user-o color-white"></i> Account</a><span>&nbsp&nbsp&nbsp&nbsp</span>
+                        <a href="/logout" class="mdl-button mdl-js-button mdl-js-ripple-effect font-20 color-white"><i class="fa fa-sign-out color-white"></i> Logout</a>
+                        {% else %}
+                        <a href="/login" class="mdl-button mdl-js-button mdl-js-ripple-effect font-20 color-white"><i class="fa fa-sign-in color-white"></i> Login</a><span>&nbsp&nbsp&nbsp&nbsp</span>
+                        <a href="/register" class="mdl-button mdl-js-button mdl-js-ripple-effect font-20 color-white"><i class="fa fa-user-o color-white"></i> Register </a>
+                        {% endif %}
+                    </div>
+                    </br>
+                </div>
+                <div class="hdr-center-logo text-center" style="padding-bottom: 25px;">
+                    <a href="/" class="d-inline-block"><img src="{{url_for('static', filename='images/logo1.png')}}" alt="" style="height: 90px;"></a>
+                </div>
+
+        </div>
+
+
+    </header><!-- End Header -->
+    <!-- Start Header Section -->
+    <!--header id="header-transparent">
+        <div class="layer-stretch hdr-center">
+            <div class="row align-items-center">
+                <div class="col-5 d-none d-sm-none d-md-block d-lg-block d-xl-block">
+                    <div class="hdr-center-account text-left p-0">
+                        {% if session['logged_in'] == True %}
+                        <a href="/profile" class="font-14"><i class="fa fa-user-o"></i>Account</a>
+                        <a href="/logout" class="font-14 mr-4"><i class="fa fa-sign-out"></i>Log out</a>
+                        {% else %}
+                        <a href="/login" class="font-14 mr-4"><i class="fa fa-sign-in"></i>Login</a>
+                        <a href="/register" class="font-14"><i class="fa fa-user-o"></i>Register</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="hdr-center-logo text-center">
+                        <a href="/" class="d-inline-block"><img src="{{url_for('static', filename='images/logo1.png')}}" alt=""></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </header--><!-- End Header Section -->
+
+    <!-- Start Slider Section -->
+    <div id="slider" class="slider-1 slider-2">
+        <div class="flexslider slider-wrapper">
+            <ul class="slides">
+                <li>
+                    <div class="slider-info">
+                        <h1 class="animated fadeInDown">Welcome to Easy Diagnosis</h1>
+                    </div>
+                    <div class="slider-backgroung-image" style="background-image: url(static/uploads/slider-1.jpg);"></div>
+
+
+                </li>
+                <li>
+                    <div class="slider-info">
+                        <h3 class= "color-white display-5" > <b>We aim to make a difference in maintaining a healthy population by pre-emptively diagnosing chronic diseases</b> </h3>
+                        <!--p>Patients of chronic diseases are highly susceptible to deterioration in their physical and mental health; consequently, hindering their independence, restricting their daily activities and imposing a large financial burden on them</p-->
+                    </div>
+                    <div class="slider-backgroung-image" style="background-image: url(static/uploads/slider-2.jpg);"></div>
+
+                </li>
+                <li>
+                    <div class="slider-info">
+                        <h2>Transforming healthcare together</h2>
+                        <!--p>Do not hesitate to contact us on our dedicated support forum. mollitia maiores temp fugit! Lorem ipsum dolor sit amet, consectetur adipisicing elit #twitterhash, @facebooktag</p-->
+                    </div>
+                    <div class="slider-backgroung-image" style="background-image: url(static/uploads/slider-3.jpg);"></div>
+
+                </li>
+                  <div class="slider-button slider-appointment">
+                        <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect  animated fadeInUp" onclick ="video()"   >Watch the Video<i class="fa fa-flag-checkered"></i></a>
+                    </div>
+            </ul>
+        </div>
+    </div><!-- End Slider Section -->
+<script>
+
+function video() {
+
+
+    if (/Mobi/.test(navigator.userAgent)) {
+    window.open("https://www.youtube.com/embed/tgbNymZ7vqY","_blank");
+}
+    window.open("/video","_blank");
+}
+
+
+
+</script>
+
+
+   <!-- Jquery Library 2.1 JavaScript-->
+    <script src="{{url_for('static', filename='js/jquery-2.1.4.min.js')}}"></script>
+    <!-- Bootstrap Core JavaScript-->
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <!-- Flexslider Plugin JavaScript-->
+    <script src="{{url_for('static', filename='js/jquery.flexslider.min.js')}}"></script>
+    <!--Custom JavaScript for Klinik Template-->
+    <script src="{{url_for('static', filename='js/custom.js')}}"></script>
+
+</body>
+</html>

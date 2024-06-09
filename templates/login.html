@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Site Title -->
+    <title> login  </title>
+    <!-- Meta Description Tag -->
+    <meta name="Description" content="login page for all the users">
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon1.png" />
+    <!-- Font Awesoeme Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css" />
+    <!-- Google web Font -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,500">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <!-- Material Design Lite Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/material.min.css" />
+    <!-- Material Design Select Field Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/mdl-selectfield.min.css">
+    <!-- Owl Carousel Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css" />
+    <!-- Animate Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/animate.min.css" />
+    <!-- Magnific Popup Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/magnific-popup.css" />
+    <!-- Flex Slider Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/flexslider.css" />
+    <!-- Custom Main Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+    <body>
+<!--body {% if loginerror is defined %}
+        {% if loginerror  == "True" %}
+            onLoad="$('#login').modal('show');"
+        {% elif  registererror == "False"  %}
+            onLoad="$('#confirmop').modal('show');"
+        {% endif %}
+      {% endif %}-->
+    <!-- Start Header -->
+    <header id="header-transparent">        
+            <div class="layer-stretch hdr-top">
+                
+                
+                <div class="hdr-top-block">
+                    <div>
+                        
+                      
+                    </div>
+                    
+                </div>
+                 <div class="hdr-center-logo text-center">
+                        <a href="/" class="d-inline-block"><img src="{{url_for('static', filename='images/logo1.png')}}" alt=""></a>
+                    </div>
+                
+        </div> </header>
+    <!-- Start page Title Section -->
+    <div class="page-ttl">
+        <div class="layer-stretch">
+            <div class="page-ttl-container">
+                <br>
+                <br>
+                <h1>Login</h1>
+                <p><a href="/">Home</a> &#8594; <span>Login</span></p>
+            </div>
+        </div>
+    </div><!-- End page Title Section -->
+    <!-- Start Login Section -->
+    <div id="login-page" class="layer-stretch">
+        <div class="layer-wrapper"> 
+            <div class="modal-body text-center">
+          <!--span id="loginformerror()" style="color: red">
+                        {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                            {% if loginerror %}   
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+                        {% endwith %}
+                   </span-->
+            <form  class="form-container" method = "post" id = "loginfrom()" action="/login" >
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+                    <i class="fa fa-user-o" style="left:2em; top:3em"></i>
+                   {% from "includes/_formhelpers.html" import render_field %}
+                    <div align=left style="margin-left:3em" >  {{ render_field(form.ID,class_="form-control") }}</div>
+                    <!--span class="mdl-textfield__error">Please Enter Valid Username!</span-->
+                </div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+                    <i class="fa fa-key" style="left:2em; top:3em"></i>
+                  {% from "includes/_formhelpers.html" import render_field %} 
+                      <div align=left style="margin-left:3em" > {{ render_field(form.password,class_="form-control") }} </div>
+                    <!--span class="mdl-textfield__error">Please Enter Valid Password!</span-->
+                     <a href="/forgot" class="forgot-pass"> Forgot Password?</a>
+                     </div>
+                {% if error %}
+               <div class="alert alert-danger text-center" role="alert">  {{ error}}  </div>
+                 {% endif %}
+                
+                
+                <div class="text-center pt-4">
+                    <input type="submit"   value="Login Now" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-primary button-lg">
+                </div>
+                
+                <div class="login-link">
+                    <span class="paragraph-small">Don't have an account?</span>
+                    <a href="/register" class="">Register as New User</a>
+                     <div >Or</div>
+                    <a href="/diagnosis" class=""> Enter as Guest</a>
+                </div>
+            </form>
+              
+               
+            </div>
+            </div>
+        </div>
+
+    <!-- End Login Section -->
+   
+     <!--div class="modal fade" id="confirmop" role="dialog">
+    <div class="modal-dialog">
+       <div class="modal-content">
+          <div class="modal-header text-center">
+             <h5 class="modal-title">Confirmation</h5>
+                <button type="button" class="close" onclick="registerformerror()" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body text-center">
+                     <span >
+                        {% with messages = get_flashed_messages(category_filter=["info"]) %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                {% endif %}
+                        {% endwith %}
+                   </span>
+                    
+                        
+                   
+                            <div class="text-center pt-4">
+                                <button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-primary button-lg" data-dismiss="modal">OK</button>
+                            </div>
+                              
+                </div>
+            </div>
+    </div>
+  </div-->
+<footer id="footer" >
+        <div class="layer-stretch">
+            <!-- Start main Footer Section -->
+           <div class="row layer-wrapper">
+                <div class="col-md-4 footer-block">
+                    <div class="footer-container footer-a">
+                        <div class="tbl">
+                            <div class="tbl-row">
+                                <div class="tbl-cell"><i class="fa fa-map-marker"></i></div>
+                                <div class="tbl-cell">
+                                    <p class="paragraph-medium paragraph-white">
+                                        Saudi Arabia, Dammam
+                                    </p>
+                                </div>
+                            </div>
+                          
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <div class="footer-container footer-a">
+                        <div class="tbl">
+                            <div class="tbl-row">
+                                
+                                <div class="tbl-cell"><i class="fa fa-phone"></i></div>
+                                <div class="tbl-cell">
+                                    <p class="paragraph-medium paragraph-white">013-600-1343</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-container footer-a">
+                      <div class="tbl-row">
+                                <div class="tbl-cell"><i class="fa fa-envelope"></i></div>
+                                <div class="tbl-cell">
+                                    <p class="paragraph-medium paragraph-white"><a href="mailto: Easy Diagnosis <identify2021.noreply@gmail.com>?Subject=Report%20Problem:%20--fill%20report%20title--" target="_top"> Contact us </a></p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End main Footer Section -->
+        <!-- Start Copyright Section -->
+        <div id="copyright">
+            <div class="layer-stretch">
+                <div class="paragraph-medium paragraph-white">Easy Diagnosis 2021 ©.</div>
+            </div>
+        </div><!-- End of Copyright Section -->
+    </footer>
+    <!-- **********Included Scripts*********** -->
+     <!--script>
+     function loginfrom() {
+            var ID, password, text;
+            text = "";
+            ID = document.getElementById('ID').value;
+            password = document.getElementById('password').value;
+
+            if ( ID === "" || password === "") {
+                text = "All mandatory data must be filled";
+            }  
+            
+    
+            if (text === ""){ 
+                document.getElementById("loginerror").style.display = 'none';
+                return true;
+            } else{
+                document.getElementById("loginerror").innerHTML = text;
+                return false;
+            }
+     }
+     function loginformerror() {
+        document.getElementById("loginerror").innerHTML = "";
+        document.getElementById("loginfrom").reset();
+                                 //  document.getElementById("oldemail").removeAttr('value');
+                                     //mdlCleanup();
+        componentHandler.upgradeAllRegistered();
+                                    //document.querySelector('.mdl-textfield__input').MaterialTextfield.change();
+                                 //  document.getElementById("newemail").;
+                                      //document.getElementById("confirmemail").value = "";
+    return  true;
+ }
+    </script-->
+
+    <!-- Jquery Library 2.1 JavaScript-->
+    <script src="/static/js/jquery-2.1.4.min.js"></script>
+    <!-- Popper JavaScript-->
+    <script src="/static/js/popper.min.js"></script>
+    <!-- Bootstrap Core JavaScript-->
+    <script src="/static/js/bootstrap.min.js"></script>
+    <!-- Material Design Lite JavaScript-->
+    <script src="/static/js/material.min.js"></script>
+    <!-- Material Select Field Script -->
+    <script src="/static/js/mdl-selectfield.min.js"></script>
+    <!-- Flexslider Plugin JavaScript-->
+    <script src="/static/js/jquery.flexslider.min.js"></script>
+    <!-- Owl Carousel Plugin JavaScript-->
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <!-- Scrolltofixed Plugin JavaScript-->
+    <script src="/static/js/jquery-scrolltofixed.min.js"></script>
+    <!-- Magnific Popup Plugin JavaScript-->
+    <script src="/static/js/jquery.magnific-popup.min.js"></script>
+    <!-- WayPoint Plugin JavaScript-->
+    <script src="/static/js/jquery.waypoints.min.js"></script>
+    <!-- CounterUp Plugin JavaScript-->
+    <script src="/static/js/jquery.counterup.js"></script>
+    <!-- SmoothScroll Plugin JavaScript-->
+    <script src="/static/js/smoothscroll.min.js"></script>
+    <!--Custom JavaScript for Klinik Template-->
+    <script src="/static/js/custom.js"></script>
+</body>
+</html>

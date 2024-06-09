@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+    <head>
+<title>Example</title>
+<style>
+  * {
+    box-sizing: border-box; 
+  }
+  body {
+    font-family: sans-serif;
+    background-color:#f6f6f6;
+    display: block;
+    margin: 0 auto;
+  height: 80px;
+    min-height: 500px;
+    flex-direction: row;
+    margin: 0;
+  }
+  h1{color: #ffffff;
+      
+    margin: 0 auto;
+        font-family:sans-serif;
+        font-weight: 300;
+        line-height: 1.4;
+        margin: 0;
+        Margin-bottom: 0;}
+  
+  .content1{
+  margin: 0 auto;
+    width: 500px;
+  }
+  
+  .col-2 {
+    display: block;
+    flex-direction: column;
+    flex: 5;
+  }
+  .content {
+      font-size: 15px;
+      height:auto;
+overflow:visible;
+    padding : 15px;
+   
+    min-height: 150px;
+    max-height: 500px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: row;
+  }
+  .content > article {
+    flex: 4;
+      color: black;
+   
+  }
+  header, footer {
+    text-align: center;
+    color: #ffffff;
+    background: #17a2a5;
+    height:auto;
+    overflow:visible;
+    min-height: 50px;
+    max-height: 100px;
+  }
+    footer {font-size: 11px; 
+    background: #f6f6f6;
+    color: #999999;}
+  header, footer, article {
+    padding: 15px;
+  }
+</style>
+        </head>
+<body>
+  <div class="content1">
+  <div class="col-2">
+  	<header><h1>Easy Diagnosis </h1></header>
+    <main class="content">
+      <article><p>Hello {{ user }}</p>  <p>This is a notice to let you know that the password for your account has been
+reset password to {{ temp }}</p>
+          <p>This is a temporary password you can login </p>
+        </article>
+    </main>
+      <footer><p >You received this mandatory email service announcement to update you about important changes to your account.</p><p>Easy Diagnosis 2021 ©.</p></footer>
+  </div>
+    </div>
+</body>
+    </html>

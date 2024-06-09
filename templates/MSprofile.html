@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Site Title -->
+    <title>Profile</title>
+    <!-- Meta Description Tag -->
+    <meta name="Description" content="Klinik is a HTML5 & CSS3 responsive template">
+    <!-- Favicon Icon -->
+    
+    <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='images/favicon1.png')}}" />
+    <!-- Font Awesoeme Stylesheet CSS -->
+    
+    <link rel="stylesheet" href="{{url_for('static', filename='font-awesome/css/font-awesome.min.css')}}" />
+    <!-- Google web Font -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,500">
+    <!-- Bootstrap core CSS -->
+    
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}" />
+    <!-- Material Design Lite Stylesheet CSS -->
+    
+    <link rel="stylesheet" href="{{url_for('static', filename='css/material.min.css')}}" />
+    <!-- Material Design Select Field Stylesheet CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/mdl-selectfield.min.css')}}" />
+    
+    <!-- Owl Carousel Stylesheet CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/owl.carousel.min.css')}}" />
+    
+    <!-- Animate Stylesheet CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/animate.min.css')}}" />
+    
+    <!-- Magnific Popup Stylesheet CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/magnific-popup.css')}}" />
+    
+    <!-- Flex Slider Stylesheet CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/flexslider.css')}}" />
+   
+    <!-- Custom Main Stylesheet CSS -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" />
+    
+    </head>
+   
+    
+    
+<body onload="start()">
+    <!-- Start Header -->  
+    
+   
+    
+    
+      <!-- Start Header -->   
+    
+    <header id="header-transparent">        
+            <div class="layer-stretch hdr-top">
+                
+                
+                <div class="hdr-top-block">
+                    <div>
+                        <a href="/logout" class="mdl-button mdl-js-button mdl-js-ripple-effect font-12"><i class="fa fa-sign-out color-black"></i> Logout</a>
+                      
+                    </div>
+                    
+                </div>
+                 <div class="hdr-center-logo text-center">
+                        <a href="/" class="d-inline-block"><img src="{{url_for('static', filename='images/logo1.png')}}" alt=""></a>
+                    </div>
+                
+        </div> 
+        
+        
+    </header><!-- End Header -->
+    
+    <!-- Start Page Title Section -->
+    <div class="page-ttl">
+        <div class="layer-stretch">
+            <div class="page-ttl-container">
+                <br>
+                <br>
+                
+                <h1>Easy Diagnosis</h1>
+                <p><a href="/">Home</a> &#8594; <a href="/profile">Profile</a></p>
+            </div>
+        </div>
+    </div><!-- End Page Title Section -->
+    <!-- Start Dashboard Section -->
+    <div id="MS-page" class="layer-stretch" style="min-height:470px">
+        <div class="layer-wrapper layer-bottom-10">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="theme-material-card">
+                        <div class="sub-ttl">Dashboard</div>
+                        <ul class="category-list">
+                            <li><a href="/profile"><i class="fa fa-id-card-o"></i>Profile</a></li>
+                            <li><a href="/diagnosishistory"><i class="fa fa-address-book"></i>Diagnose History</a></li>
+                        </ul>
+                    </div>
+                    
+                </div>
+                <div class="col-lg-8">
+                    <div class="theme-material-card">
+                        <div class="row">
+                            
+                            <div class="col-sm-8">
+                                <div>
+                                    <h3>Dr.{{name}}</h3>
+                                    <span class="badge badge-primary">Medical Specialist</span>
+                                    <p>{{email}}</p>
+                                   
+                                </div>
+                                
+ <!-- Change Email -->                                    
+ <div class="doctor-details-extra text-left p-0 pt-4">         
+
+ 
+  <button type="button" onclick="emailfromerror()" data-toggle="modal" data-target="#changeEmail"><p class="text-center"><a href="#"><i class="fa fa-envelope"></i>Change Email</a></p></button>
+     
+<button type="button" onclick="passwordfromerror()" data-toggle="modal" data-target="#changePassword"><p class="text-center"><a href="#"><i class="fa fa-edit"></i>Change Password</a></p></button>
+</div>
+     <div class="container">   
+    <div class="modal fade" id="changeEmail" role="dialog">
+    <div class="modal-dialog">
+       <div class="modal-content">
+          <div class="modal-header text-center">
+             <h5 class="modal-title">Change Email</h5>
+                <button type="button" class="close" onclick="emailfromerror()" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body text-center">
+                     <span id="emailerror" style="color: red">
+                        {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                            {% if emailerror  == "True" %}   
+                                {% if messages %}
+                                    {% for message in messages %}
+                         <div class= 'alert alert-danger text-center' role= 'alert'>{{ message }}</div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+                        {% endwith %}
+                   </span>
+                    
+                        <form method = "post" onsubmit="return emailfrom()" id = "emailform" action="/emailchange" >
+                            
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon text-left">
+                                <span style = "margin-top = 4em;" class ="text-left" > Old Email *</span>
+                                 <i class="fa fa-envelope-o"></i>
+                               <input class="mdl-textfield__input" type="text"  name="oldemail" id="oldemail" >
+                                <label class="mdl-textfield__label" for="oldemail"></label>
+                                
+                            </div>
+                     
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon text-left">
+                                <span style = "margin-top = 4em;" class ="text-left" > New Email *</span>
+                                <i class="fa fa-envelope-o"></i>
+                                <input class="mdl-textfield__input" type="text" name="newemail" id="newemail">
+                                <label class="mdl-textfield__label" for="newemail"></label>
+                                
+                            </div>
+                     
+                   
+                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon text-left">
+                                <i class="fa fa-envelope-o"></i>
+                                <span style = "margin-top = 4em;" class ="text-left" > Confirm Email *</span>
+                                <input class="mdl-textfield__input" type="text" name="confirmemail" id="confirmemail">
+                                <label class="mdl-textfield__label" for="confirmemail"></label>
+                                
+                            </div>
+                   
+                            <div class="text-center pt-4">
+                                <input type="submit"   value="Save Changes" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-primary button-lg">
+                            </div>
+                    </form>            
+                </div>
+            </div>
+    </div>
+  </div>
+         
+         
+         <!-- Change optation confirm message -->
+          <div class="modal fade" id="confirmop" role="dialog">
+    <div class="modal-dialog">
+       <div class="modal-content">
+          <div class="modal-header text-center">
+             <h5 class="modal-title">Confirmation</h5>
+                <button type="button" class="close" onclick="emailfromerror()" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body text-center">
+                     <span >
+                        {% with messages = get_flashed_messages(category_filter=["info"]) %}
+                               
+                                {% if messages %}
+                                    {% for message in messages %}
+                                    {{ message }}
+                                    {% endfor %}
+                                {% endif %}
+                           
+                        {% endwith %}
+                   </span>
+                    
+                        
+                   
+                            <div class="text-center pt-4">
+                                <button onclick="changeURL()" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-primary button-lg" data-dismiss="modal">OK</button>
+                            </div>
+                              
+                </div>
+            </div>
+    </div>
+  </div>       
+             
+  <!-- Change Password -->
+         
+                     
+
+  <div class="modal fade" id="changePassword" role="dialog">
+    <div class="modal-dialog">
+       <div class="modal-content">
+          <div class="modal-header text-center">
+                    <h5 class="modal-title">Change Password</h5>
+                    <button type="button" class="close" onclick="passwordfromerror()" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body text-center">
+                    <span id="passworderror" style="color: red">
+                    {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                        {% if passerror  == "True" %}
+                            {% if messages %}
+                                {% for message in messages %}
+                        <div class= 'alert alert-danger text-center' role= 'alert'>{{message}}</div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endif %}
+                    {% endwith %}
+                    </span>
+                   
+                <form method = "post" onsubmit="return passwordfrom()" id = "passwordform" action="/passwordchange">  
+                 <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon text-left">
+                    <i class="fa fa-key"></i>
+                     <span style = "margin-top = 4em;" class ="text-left" > Old Password *</span>
+                    <input class="mdl-textfield__input" type="password" name="oldpassword" id="oldpassword" >
+                    <label class="mdl-textfield__label" for="oldpassword"></label>
+                    <!--span class="mdl-textfield__error">Please Enter Valid Password!</span-->
+                </div>
+                      
+
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon text-left">
+                    <i class="fa fa-key"></i>
+                  <span style = "margin-top = 4em;" class ="text-left" > New Password *</span>
+                    <input class="mdl-textfield__input" type="password" name="newpassword" id="newpassword" >
+                    <label class="mdl-textfield__label" for="newpassword"></label>
+                    <!--span class="mdl-textfield__error">Please Enter Valid Password!</span-->
+                </div>
+                       
+             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon text-left">
+                    <i class="fa fa-key"></i>
+                 <span style = "margin-top = 4em;" class ="text-left" > Confirm Password *</span>
+                    <input class="mdl-textfield__input" type="password" name="confirmpassword" id="confirmpassword" >
+                    <label class="mdl-textfield__label" for="confirmpassword"></label>
+                    <!--span class="mdl-textfield__error" >Please Enter Valid Password!</span-->
+                </div>
+                        
+                        
+                
+                    <div class="text-center pt-4">
+                        <input type="submit"   value="Save Changes" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-primary button-lg ">
+                        
+                    </div>
+                </form> 
+                </div>
+            </div>   
+    </div>
+  </div>                                                       
+</div>
+  
+
+                                    
+                                    
+                                    
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+   
+    
+    
+    <footer id="footer" >
+        <div class="layer-stretch">
+            <!-- Start main Footer Section -->
+           <div class="row layer-wrapper">
+                <div class="col-md-4 footer-block">
+                    <div class="footer-container footer-a">
+                        <div class="tbl">
+                            <div class="tbl-row">
+                                <div class="tbl-cell"><i class="fa fa-map-marker"></i></div>
+                                <div class="tbl-cell">
+                                    <p class="paragraph-medium paragraph-white">
+                                        Saudi Arabia, Dammam
+                                    </p>
+                                </div>
+                            </div>
+                          
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <div class="footer-container footer-a">
+                        <div class="tbl">
+                            <div class="tbl-row">
+                                
+                                <div class="tbl-cell"><i class="fa fa-phone"></i></div>
+                                <div class="tbl-cell">
+                                    <p class="paragraph-medium paragraph-white">013-600-1343</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-container footer-a">
+                      <div class="tbl-row">
+                                <div class="tbl-cell"><i class="fa fa-envelope"></i></div>
+                                <div class="tbl-cell">
+                                    <p class="paragraph-medium paragraph-white"><a href="mailto: Easy Diagnosis <identify2021.noreply@gmail.com>?Subject=Report%20Problem:%20--fill%20report%20title--" target="_top"> Contact us </a></p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End main Footer Section -->
+        <!-- Start Copyright Section -->
+        <div id="copyright">
+            <div class="layer-stretch">
+                <div class="paragraph-medium paragraph-white">Easy Diagnosis 2021 ©.</div>
+            </div>
+        </div><!-- End of Copyright Section -->
+    </footer>
+            
+            
+           
+   
+   <script>
+       
+       function start(){
+           
+      {% if passerror is defined %}
+        {% if passerror == "True"  %}
+             $('#changePassword').modal('show');
+        {% elif  passerror == "False" %}
+            $('#confirmop').modal('show');
+        {% endif %}
+      {% endif %}
+      
+      {% if emailerror is defined %}
+        {% if emailerror  == "True" %}
+            $('#changeEmail').modal('show');
+            var oldemail = "{{oldemail}}";
+            var newemail = "{{newemail}}";
+            document.getElementById("oldemail").value = oldemail;
+            document.getElementById("newemail").value = newemail;
+            document.getElementById("confirmemail").value = newemail;
+         
+        {% elif  emailerror == "False"  %}
+            $('#confirmop').modal('show');
+        {% endif %}
+      {% endif %}
+               
+       }
+       
+        
+       function emailfrom() {
+            var oldemail, newemail, confirmemail, text;
+            text = "";
+    
+            oldemail = document.getElementById("oldemail").value;
+            newemail = document.getElementById("newemail").value;
+            confirmemail = document.getElementById("confirmemail").value;
+
+            if (oldemail === "" || newemail === "" || confirmemail === "") {
+                text = "All mandatory data must be filled";
+            }  else if( !(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(oldemail))||!(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(newemail))||
+            !(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(confirmemail))){ 
+    	        text = "Incorrect email form, email should be in the form of someone@example.com";
+            } else if ( newemail.lower() != confirmemail.lower() ){
+                text = "Confirmed email does not match the new email";
+            }
+    
+            if (text === ""){ 
+                document.getElementById("emailerror").style.display = 'none';
+                return true;
+            } else{
+                document.getElementById("emailerror").innerHTML = "<div class= 'alert alert-danger text-center' role= 'alert'>"+text+"</div>";
+                return false;
+            }
+       }
+       
+       
+       function passwordfrom() {
+            var oldpassword, newpassword, confirmpassword, text;
+            text = "";
+    
+            oldpassword = document.getElementById("oldpassword").value;
+            newpassword = document.getElementById("newpassword").value;
+            confirmpassword = document.getElementById("confirmpassword").value;
+
+            if (oldpassword == "" || newpassword == "" || confirmpassword == "") {
+                text = "All mandatory data must be filled";
+        
+            } else if( newpassword.length < 8 ){
+    	        text = "Password should be at least 8 alphanumeric characters";
+            } else if( !(/\d/.test(newpassword))||!(/[a-z]/i.test(newpassword))){ 
+    	        text = "Password should contain digits and characters";
+            } else if ( newpassword != confirmpassword ){
+                text = "Confirmed password does not match the new password";
+            }
+    
+            if (text === ""){ 
+                document.getElementById("passworderror").innerHTML = text;
+                return true;
+            } else{
+                document.getElementById("passworderror").innerHTML = "<div class= 'alert alert-danger text-center' role= 'alert'>"+text+"</div>";
+                return false;
+            }
+       }
+       
+         
+       function changeURL(){
+      
+      history.pushState('', 'Manage Users', 'http://127.0.0.1:5000/profile');
+      
+  }
+         
+       
+       function passwordfromerror() {
+            document.getElementById("passworderror").innerHTML = "";
+            document.getElementById("emailerror").innerHTML = "";
+            document.getElementById("passwordform").reset();
+            return true;
+       }
+         
+         
+        function emailfromerror() {
+            document.getElementById("emailerror").innerHTML = "";
+            document.getElementById("passworderror").innerHTML = "";
+            document.getElementById("emailform").reset();
+                                  
+            return  true;
+                                  }
+       
+    </script>
+    
+    <!-- Jquery Library 2.1 JavaScript-->
+    <script src="{{url_for('static', filename='js/jquery-2.1.4.min.js')}}"></script>
+                 
+    <!-- Popper JavaScript-->
+    <script src="{{url_for('static', filename='js/popper.min.js')}}"></script>
+    
+    <!-- Bootstrap Core JavaScript-->
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    
+    <!-- Material Design Lite JavaScript-->
+    <script src="{{url_for('static', filename='js/material.min.js')}}"></script>
+    
+    <!-- Material Select Field Script -->
+    <script src="{{url_for('static', filename='js/mdl-selectfield.min.js')}}"></script>
+    
+    <!-- Flexslider Plugin JavaScript-->
+    <script src="{{url_for('static', filename='js/jquery.flexslider.min.js')}}"></script>
+    
+    <!-- Owl Carousel Plugin JavaScript-->
+    <script src="{{url_for('static', filename='js/owl.carousel.min.js')}}"></script>
+    
+    <!-- Scrolltofixed Plugin JavaScript-->
+    <script src="{{url_for('static', filename='js/jquery-scrolltofixed.min.js')}}"></script>
+    
+    <!-- Magnific Popup Plugin JavaScript-->
+    <script src="{{url_for('static', filename='js/jquery.magnific-popup.min.js')}}"></script>
+    
+    <!-- WayPoint Plugin JavaScript-->
+    <script src="{{url_for('static', filename='js/jquery.waypoints.min.js')}}"></script>
+    
+    <!-- CounterUp Plugin JavaScript-->
+    <script src="{{url_for('static', filename='js/jquery.counterup.js')}}"></script>
+    
+    <!-- SmoothScroll Plugin JavaScript-->
+    <script src="{{url_for('static', filename='js/smoothscroll.min.js')}}"></script>
+    
+    <!--Custom JavaScript for Klinik Template-->
+    <script src="{{url_for('static', filename='js/custom.js')}}"></script>
+    
+</body>
+</html>

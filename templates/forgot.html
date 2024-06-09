@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Site Title -->
+    <title>Retrieve Password</title>
+    <!-- Meta Description Tag -->
+    <meta name="Description" content="Klinik is a HTML5 & CSS3 responsive template">
+    <!-- Favicon Icon -->
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon1.png" />
+    <!-- Font Awesoeme Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css" />
+    <!-- Google web Font -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Montserrat:400,500">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <!-- Material Design Lite Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/material.min.css" />
+    <!-- Material Design Select Field Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/mdl-selectfield.min.css">
+    <!-- Owl Carousel Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css" />
+    <!-- Animate Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/animate.min.css" />
+    <!-- Magnific Popup Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/magnific-popup.css" />
+    <!-- Flex Slider Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/flexslider.css" />
+    <!-- Custom Main Stylesheet CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<!--body {% if forgoterror is defined %}
+        {% if  forgoterror =="False"  %}
+            onLoad="$('#confirmop').modal('show');"
+        {% endif %}
+       {% endif %}-->
+      <!-- Start Header --><body>
+    <header id="header-transparent">        
+            <div class="layer-stretch hdr-top">
+                
+                
+                <div class="hdr-top-block">
+                    <div>
+                        
+                      
+                    </div>
+                    
+                </div>
+                 <div class="hdr-center-logo text-center">
+                        <a href="/" class="d-inline-block"><img src="{{url_for('static', filename='images/logo1.png')}}" alt=""></a>
+                    </div>
+                
+        </div> </header>
+    <!-- Start Page Title Section -->
+    <div class="page-ttl">
+        <div class="layer-stretch">
+            <div class="page-ttl-container">
+                <br>
+                <br>
+                <h1>Forgot Password</h1>
+                <p><a href="/">Home</a> &#8594; <span>Forgot Password</span></p>
+            </div>
+        </div>
+    </div><!-- End Page Title Section -->
+    <!-- Start Forgot Section -->
+
+
+    <div class="layer-stretch">
+        <div class="layer-wrapper">
+           <div class="form-container">
+             <!--span id="forgoterror" style="color: red">
+                        {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                            {% if forgoterror %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                {% endif %}
+                            {% endif %}
+                        {% endwith %}
+                   </span-->
+               <!-- onsubmit="return forgotform()" id = "forgotform" -->
+            <form method = "post" onsubmit="return forgotform()" id = "forgotform" action="/forgot" >
+                <div class="login-condition">Enter the Email address associated with your account and we will mail you a temporary password.</div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label form-input-icon">
+                    <i class="fa fa-envelope-o" style="left:2em; top:3em"></i>
+                    {% from "includes/_formhelpers.html" import render_field %}
+                    <div align=left style="margin-left:3em" >  {{ render_field(form.uemail,class_="form-control") }}</div>
+                    <!--<input class="mdl-textfield__input" type="text" name="email" id="email">-->
+                <!--    <label class="mdl-textfield__label" for="forgot-email">Email <em> *</em></label>-->
+                    <!--span class="mdl-textfield__error">Please Enter Valid Email!</span-->
+                </div>
+                
+                {% if error %}
+               <div class="alert alert-danger" role="alert">  {{ error}}  </div>
+                 {% endif %}
+                <div class="text-center pt-4">
+                <input type="submit"  value="Send Reset link" class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-primary button-lg">
+                </div>
+                <div class="login-link">
+                    <span class="paragraph-small">Already have an account?</span>
+                    <a href="/login" class="">Login Now</a>
+                    <div >Or</div>
+                    <a href="/diagnosis" class=""> Enter as Guest</a>
+                </div>
+            </form>
+          </div>
+        </div>
+    </div>
+<!--div class="modal fade" id="confirmop" role="dialog">
+    <div class="modal-dialog">
+       <div class="modal-content">
+          <div class="modal-header text-center">
+             <h5 class="modal-title">Confirmation</h5>
+                <button type="button" class="close" onclick="registerformerror()" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body text-center">
+                     <span >
+                        {% with messages = get_flashed_messages(category_filter=["info"]) %}
+                                {% if messages %}
+                                    {% for message in messages %}
+                                        {{ message }}
+                                    {% endfor %}
+                                {% endif %}
+                        {% endwith %}
+                   </span>
+
+    <div class="text-center pt-4">
+        <button class="mdl-button mdl-js-button mdl-button--colored mdl-js-ripple-effect mdl-button--raised button button-primary button-lg" data-dismiss="modal">OK</button>
+    </div>
+
+                </div>
+            </div>
+    </div>
+  </div-->
+    <footer id="footer" >
+        <div class="layer-stretch">
+            <!-- Start main Footer Section -->
+           <div class="row layer-wrapper">
+                <div class="col-md-4 footer-block">
+                    <div class="footer-container footer-a">
+                        <div class="tbl">
+                            <div class="tbl-row">
+                                <div class="tbl-cell"><i class="fa fa-map-marker"></i></div>
+                                <div class="tbl-cell">
+                                    <p class="paragraph-medium paragraph-white">
+                                        Saudi Arabia, Dammam
+                                    </p>
+                                </div>
+                            </div>
+                          
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <div class="footer-container footer-a">
+                        <div class="tbl">
+                            <div class="tbl-row">
+                                
+                                <div class="tbl-cell"><i class="fa fa-phone"></i></div>
+                                <div class="tbl-cell">
+                                    <p class="paragraph-medium paragraph-white">013-600-1343</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="footer-container footer-a">
+                      <div class="tbl-row">
+                                <div class="tbl-cell"><i class="fa fa-envelope"></i></div>
+                                <div class="tbl-cell">
+                                    <p class="paragraph-medium paragraph-white"><a href="mailto: Easy Diagnosis <identify2021.noreply@gmail.com>?Subject=Report%20Problem:%20--fill%20report%20title--" target="_top"> Contact us </a></p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End main Footer Section -->
+        <!-- Start Copyright Section -->
+        <div id="copyright">
+            <div class="layer-stretch">
+                <div class="paragraph-medium paragraph-white">Easy Diagnosis 2021 ©.</div>
+            </div>
+        </div><!-- End of Copyright Section -->
+    </footer>
+
+    <!-- End Forgot Section -->
+        <!--script>
+        /*
+     function forgotform() {
+            var email, text;
+            text = "";
+            email = document.getElementById('email').value;
+
+            if ( email== "" ) {
+                text = " The email must be filled";
+            } else if( !(/^[w-.+]+@[a-zA-Z0-9.-]+.[a-zA-z0-9]{2,4}$/.test(email))){
+    	        text = "Incorrect email form, email should be in the form of someone@example.com";
+            }
+
+
+            if (text === ""){
+                document.getElementById("forgoterror").innerHTML = text;
+                return true;
+            } else{
+                document.getElementById("forgoterror").innerHTML = text;
+                return false;
+            }
+     }
+     function forgotformerror() {
+        document.getElementById("forgoterror").innerHTML = "";
+        document.getElementById("forgotfrom").reset();
+        componentHandler.upgradeAllRegistered();
+
+    return  true;
+ }
+      */
+    </script-->
+
+
+    <!-- **********Included Scripts*********** -->
+
+    <!-- Jquery Library 2.1 JavaScript-->
+    <script src="/static/js/jquery-2.1.4.min.js"></script>
+    <!-- Popper JavaScript-->
+    <script src="/static/js/popper.min.js"></script>
+    <!-- Bootstrap Core JavaScript-->
+    <script src="/static/js/bootstrap.min.js"></script>
+    <!-- Material Design Lite JavaScript-->
+    <script src="/static/js/material.min.js"></script>
+    <!-- Material Select Field Script -->
+    <script src="/static/js/mdl-selectfield.min.js"></script>
+    <!-- Flexslider Plugin JavaScript-->
+    <script src="/static/js/jquery.flexslider.min.js"></script>
+    <!-- Owl Carousel Plugin JavaScript-->
+    <script src="/static/js/owl.carousel.min.js"></script>
+    <!-- Scrolltofixed Plugin JavaScript-->
+    <script src="/static/js/jquery-scrolltofixed.min.js"></script>
+    <!-- Magnific Popup Plugin JavaScript-->
+    <script src="/static/js/jquery.magnific-popup.min.js"></script>
+    <!-- WayPoint Plugin JavaScript-->
+    <script src="/static/js/jquery.waypoints.min.js"></script>
+    <!-- CounterUp Plugin JavaScript-->
+    <script src="/static/js/jquery.counterup.js"></script>
+    <!-- SmoothScroll Plugin JavaScript-->
+    <script src="/static/js/smoothscroll.min.js"></script>
+    <!--Custom JavaScript for Klinik Template-->
+    <script src="/static/js/custom.js"></script>
+</body>
+</html>
